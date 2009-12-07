@@ -6,12 +6,17 @@
 					   creationComplete="windowedapplication1_creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
-			import org.mellen.transmissionair.events.TorrentRPCEvent;
+			import flash.system.System;
+			
 			import mx.events.FlexEvent;
 			import mx.managers.DragManager;
+			
+			import org.mellen.transmissionair.events.TorrentRPCEvent;
 			private var context:TransmissionAirContext;
 			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
 			{
+				
+				
 				context = new TransmissionAirContext(this);
 			}
 

@@ -8,6 +8,7 @@
 	<fx:Script>
 		<![CDATA[
 			import flash.events.MouseEvent;
+			import flash.system.System;
 			
 			import org.mellen.transmissionair.events.ConfigEvent;
 			
@@ -79,7 +80,7 @@
 	
 	</s:Group>
 	<s:HGroup>
-		<s:Button label="Quit"/>
+		<s:Button label="Quit" click="{System.exit(0)}"/>
 		<s:Button label="Connect" click="button1_clickHandler(event)"/>
 	</s:HGroup>
 	

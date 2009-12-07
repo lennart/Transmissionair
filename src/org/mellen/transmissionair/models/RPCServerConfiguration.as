@@ -6,7 +6,6 @@ package org.mellen.transmissionair.models
 	import flash.filesystem.FileStream;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.utils.ByteArray;
 	
 	import org.mellen.transmissionair.events.ConfigEvent;
 	import org.robotlegs.mvcs.Actor;
@@ -25,15 +24,16 @@ package org.mellen.transmissionair.models
 			super();
 			loader = new URLLoader();
 			
-			var configFileXML:File = File.applicationStorageDirectory.resolvePath(configFile);
-			if(!configFileXML.exists) {
-				var originalFile:File = File.applicationDirectory.resolvePath(configFile);
-				originalFile.copyTo(configFileXML);
-			}
-			var req:URLRequest = new URLRequest(configFileXML.url);
+//			var configFileXML:File = File.applicationStorageDirectory.resolvePath(configFile);
+//			if(!configFileXML.exists) {
+//				var originalFile:File = File.applicationDirectory.resolvePath(configFile);
+//				originalFile.copyTo(configFileXML);
+//			}
+			
+//			var req:URLRequest = new URLRequest(originalFile.url);
 				
 			loader.addEventListener(Event.COMPLETE,XMLLoaded);
-			loader.load(req);
+			loader.load( new URLRequest(File.applicationDirectory.resolvePath(configFile).url) );
 		}
 		
 		protected function XMLLoaded(e:Event):void {
@@ -72,9 +72,12 @@ package org.mellen.transmissionair.models
 		}
 		
 		private function save(): void {
-			var file:File = File.applicationStorageDirectory.resolvePath(configFile);
+			//var file:File = File.applicationStorageDirectory.resolvePath(configFile);
+			//var currentStorage : File = File.applicationDirectory.resolvePath(configFile);
+			var file:File = new File( File.applicationDirectory.resolvePath(configFile).nativePath );
+			//var file:File = File.applicationDirectory.resolvePath(configFile);
 			_stream = new FileStream();
-			_stream.open(file,FileMode.WRITE);		
+			_stream.open(file, FileMode.WRITE);		
 			_stream.writeUTFBytes(configXML.toString());
 			_stream.close();
 			dispatch(new ConfigEvent(ConfigEvent.UPDATED));
