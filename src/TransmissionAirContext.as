@@ -2,6 +2,9 @@ package
 {
 	import flash.display.DisplayObjectContainer;
 	
+	import org.mellen.transmissionair.commands.StartupCommand;
+	import org.mellen.transmissionair.models.RPCServerConfiguration;
+	import org.mellen.transmissionair.view.RPCServerConfig;
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.core.IContext;
 	import org.robotlegs.mvcs.Context;
@@ -21,9 +24,10 @@ package
 			//The StartupCommand will map additional commands, mediators, services,
 			//and models for use in the application.
 			commandMap.mapEvent( ContextEvent.STARTUP, StartupCommand, ContextEvent, true );
+			injector.mapSingleton(RPCServerConfiguration);
 			
-			//Start the Application (triggers the StartupCommand)
-			dispatch(new ContextEvent(ContextEvent.STARTUP));
+			dispatchEvent(new ContextEvent(ContextEvent.STARTUP));
+			
 		}
 	}
 }

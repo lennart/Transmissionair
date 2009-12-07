@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" width="100%" height="100%">
+	<s:layout>
+	<s:VerticalLayout horizontalAlign="center"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import org.mellen.transmissionair.events.ConfigEvent;
+			
+			import spark.components.SkinnableContainer;
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				var configEvent:ConfigEvent = new ConfigEvent(ConfigEvent.ACCEPTED);
+				configEvent.selectionIndex = serverList.selectedIndex;
+				dispatchEvent(configEvent);
+				closeAndRemove();	
+			}
+			
+			protected function closeAndRemove():void
+			{
+				(owner as SkinnableContainer).removeElement(this);
+				
+			}
+
+
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				var configEvent:ConfigEvent = new ConfigEvent(ConfigEvent.SAVE);
+				configEvent.ip = ip.text;
+				configEvent.port = uint(port.text);
+				dispatchEvent(configEvent);	
+			}
+
+
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				ip.text = "";
+				port.text = "";
+			}
+
+		]]>
+	</fx:Script>
+	<s:Group width="100%">
+		<s:layout>
+			<s:HorizontalLayout verticalAlign="middle"/>
+		</s:layout>
+		<s:Group>
+			<s:layout>
+				<s:VerticalLayout horizontalAlign="center"/>
+				
+				
+			</s:layout>
+			<mx:Form>
+				<mx:FormItem label="Host">
+					<s:TextInput x="36" y="6" id="ip" text="{serverList.selectedItem.ip}"/>
+				</mx:FormItem>
+				<mx:FormItem label="Port">
+					<s:TextInput id="port" text="{serverList.selectedItem.port}"/>
+				</mx:FormItem>
+			</mx:Form>
+			<s:HGroup>
+				<s:Button label="New" click="button3_clickHandler(event)"/>
+				<s:Button label="Save" click="button2_clickHandler(event)"/>
+					
+			</s:HGroup>
+			
+		</s:Group>
+		<mx:DataGrid id="serverList" width="100%">
+			<mx:columns>
+				<mx:DataGridColumn headerText="IP Address" dataField="ip"/>
+				<mx:DataGridColumn headerText="Port" dataField="port"/>
+			</mx:columns>
+		</mx:DataGrid>
+	
+	</s:Group>
+	<s:HGroup>
+		<s:Button label="Quit"/>
+		<s:Button label="Connect" click="button1_clickHandler(event)"/>
+	</s:HGroup>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+</s:Group>

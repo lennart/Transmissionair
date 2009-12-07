@@ -17,6 +17,8 @@
       <airExcludes/>
     </application>
   </applications>
-  <modules/>
+  <modules>
+    <module application="src/Transmissionair.mxml" destPath="IconButtonSkin.swf" optimize="true" sourcePath="src/IconButtonSkin.mxml"/>
+  </modules>
   <buildCSSFiles/>
 </actionScriptProperties>

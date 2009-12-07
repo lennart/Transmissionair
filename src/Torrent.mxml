@@ -1,47 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
-				implements="flash.events.IEventDispatcher" width="100%" addedToStage="group1_addedToStageHandler(event)" xmlns:mx="library://ns.adobe.com/flex/halo">
-	
+				implements="flash.events.IEventDispatcher" 
+				width="100%" 
+				addedToStage="group1_addedToStageHandler(event)"
+				xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:local="*" xmlns:transmissionair="org.mellen.transmissionair.*">
+				
+	<fx:Binding source="{data.state}" destination="currentState" />
 	<fx:Script>
 		<![CDATA[
-			import flash.events.MouseEvent;
 			import flash.events.Event;
+			import flash.events.FocusEvent;
 			import flash.events.IEventDispatcher;
+			import flash.events.MouseEvent;
+			
+			import org.mellen.transmissionair.events.TorrentRPCEvent;
 			
 			[Bindable]
 			public var jsonRepresentation:Object;
 			protected function group1_addedToStageHandler(event:Event):void
 			{
-				// TODO Auto-generated method stub
-				trace("Added");
+				
+			}
+			
+			
+			
+			
+			
+			protected function start(event:MouseEvent):void
+			{
+				var rpcEvent:TorrentRPCEvent = new TorrentRPCEvent(TorrentRPCEvent.TORRENT_START);
+				rpcEvent.id = data.id;
+				this.owner.dispatchEvent(rpcEvent);			
+			}
+			
+			protected function stop(event:MouseEvent):void
+			{
+				var rpcEvent:TorrentRPCEvent = new TorrentRPCEvent(TorrentRPCEvent.TORRENT_PAUSE);
+				rpcEvent.id = data.id;
+				this.owner.dispatchEvent(rpcEvent);
+				
+			}
+			
+			protected function remove(event:MouseEvent):void {
+				var rpcEvent:TorrentRPCEvent = new TorrentRPCEvent(TorrentRPCEvent.TORRENT_REMOVE);
+				rpcEvent.id = data.id;
+				this.owner.dispatchEvent(rpcEvent);
+			}
+			
+			
+			
+		/*	protected override function getCurrentRendererState() :String {
+				
+			}
+		*/	
+
+			protected function itemrenderer1_rollOverHandler(event:MouseEvent):void
+			{
+				trace(event);
+				
 			}
 			
 
-			protected function button1_clickHandler(event:MouseEvent):void
+
+			protected function itemrenderer1_mouseOverHandler(event:MouseEvent):void
 			{
-				
+				trace(event);
 			}
+
+
+			protected function itemrenderer1_focusInHandler(event:FocusEvent):void
+			{
+				trace(event);
+			}
+
+
+			/*override public function set currentState(name:String):void {
+				//trace(event);
+				if(data){
+				if(name == data.state) {
+					this["currentState"] = data.state;
+				}
+				}
+			}*/
 
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Group id="group" width="100%" height="76" >
-		<s:Label x="7" y="5" text="{data.name}"/>
+	
+	<s:states>
+		<s:State name="paused" />
+		<s:State name="normal" basedOn="{data.state}"/>
+		<s:State name="hovered" basedOn="{data.state}"/>
+		<s:State name="running"/>
+		<s:State name="pausedComplete" />
+		<s:State name="seeding"/> 		
+	</s:states>
+	<s:Group id="group" left="15" right="15">
 		
-		<s:Rect left="10" top="20" width="{(group.width-20)*data.percentDone}" height="10">
-			<s:fill>
-				<s:LinearGradient>
-					<s:entries>
-						<s:GradientEntry alpha="0.9" color="#88fe20" ratio="0.0"/>
-						<s:GradientEntry alpha="0.6" color="#20aa00" ratio="1.0"/>	
-						
-					</s:entries>
-				</s:LinearGradient>
-			</s:fill>
-		</s:Rect>
+		<s:layout>
+		<s:VerticalLayout/>
+		</s:layout>
+		<mx:Text text="{data.name}" width="100%" fontWeight="bold"/>
+		<s:HGroup width="100%">
+			<s:Group id="progress" width="100%">
+				<s:Rect width="{(progress.width-20)*data.percentDone}" height="10">
+					<s:stroke>
+						<s:SolidColorStroke color="#909090"/>
+					</s:stroke>
+					<s:fill>
+						<s:LinearGradient rotation="90.0">
+							
+							<s:entries>
+								<s:GradientEntry alpha="0.9" 
+												 color.seeding="#88fe20"
+												 color.paused="#b8b8b8" 
+												 color.running="#58b2ee"
+												  
+												 ratio="0.0" />
+								<s:GradientEntry alpha="0.6"
+												 color.seeding="#20aa00"
+												 color.paused="#bdbdbd" 
+												 color.running="#5ab7f4" 
+												 ratio="1.0"/>	
+								
+							</s:entries>
+						</s:LinearGradient>
+					</s:fill>
+				</s:Rect>	
+			</s:Group>
+			
+			<transmissionair:IconButton skinClass="IconButtonSkin" iconUp="images/PauseOff.png"  click="stop(event)" 
+										iconDown="images/PauseOn.png"
+										iconOver="images/PauseHover.png"
+										includeIn="running,seeding"/>
+			
+			<transmissionair:IconButton skinClass="IconButtonSkin" iconUp="images/ResumeOff.png"  click="start(event)" 
+										iconDown="images/ResumeOn.png"
+										iconOver="images/ResumeHover.png"
+										includeIn="paused,pausedComplete"/>
+		</s:HGroup>
 		
+		<s:Group>
+			<s:layout>
+			<s:HorizontalLayout />
+			</s:layout>
+
+			
+			<s:Button label="Remove" click="remove(event)"/>
+			<s:Label text="Down {(data.rateDownload/1024).toFixed(2)}kB/s"/>
+			<s:Label text="Up {(data.rateUpload/1024).toFixed(2)}kB/s"/>
+		</s:Group>		
 	</s:Group>
 </s:ItemRenderer>
