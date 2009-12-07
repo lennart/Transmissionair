@@ -8,7 +8,6 @@
 	<fx:Script>
 		<![CDATA[
 			import flash.events.MouseEvent;
-			import flash.system.System;
 			
 			import org.mellen.transmissionair.events.ConfigEvent;
 			
@@ -42,6 +41,12 @@
 			{
 				ip.text = "";
 				port.text = "";
+			}
+
+
+			protected function button4_clickHandler(event:MouseEvent):void
+			{
+				NativeApplication.nativeApplication.exit();
 			}
 
 		]]>
@@ -80,7 +85,7 @@
 	
 	</s:Group>
 	<s:HGroup>
-		<s:Button label="Quit" click="{System.exit(0)}"/>
+		<s:Button label="Quit" click="button4_clickHandler(event)"/>
 		<s:Button label="Connect" click="button1_clickHandler(event)"/>
 	</s:HGroup>
 	
