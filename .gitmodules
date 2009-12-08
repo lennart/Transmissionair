@@ -1,0 +1,6 @@
+[submodule "contrib/robotlegs"]
+	path = contrib/robotlegs
+	url = git://github.com/robotlegs/robotlegs-framework.git
+[submodule "contrib/swiftsuspenders"]
+	path = contrib/swiftsuspenders
+	url = git://github.com/tschneidereit/SwiftSuspenders.git
