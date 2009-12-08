@@ -14,9 +14,9 @@ package org.mellen.transmissionair.services
 	
 	import mx.utils.Base64Encoder;
 	
+	import org.mellen.transmissionair.events.TorrentRPCEvent;
 	import org.mellen.transmissionair.models.TorrentInfo;
 	import org.robotlegs.mvcs.Actor;
-	import org.mellen.transmissionair.events.TorrentRPCEvent;
 	
 	public class TransmissionRPCService extends Actor implements BitTorrentFullRPCService
 	{
@@ -229,6 +229,7 @@ package org.mellen.transmissionair.services
 				if(header["name"] == SESSION_HEADER_KEY) {
 					sessionID = header["value"];
 					dispatch(new TorrentRPCEvent(TorrentRPCEvent.SESSION_ID_RECEIVED));
+					//
 					//pollTorrents.addEventListener(TimerEvent.TIMER,fetchTorrentList);
 					//pollTorrents.start();
 				}

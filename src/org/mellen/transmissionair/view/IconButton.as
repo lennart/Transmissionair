@@ -1,4 +1,4 @@
-package org.mellen.transmissionair
+package org.mellen.transmissionair.view
 {
 	import spark.components.Button;
 	

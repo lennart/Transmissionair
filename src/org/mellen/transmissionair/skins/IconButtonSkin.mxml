@@ -7,7 +7,7 @@
 	currentStateChanging="onCurrentStateChanging(event)"
 	>
 	<fx:Metadata>
-		[HostComponent("org.mellen.transmissionair.IconButton")]
+		[HostComponent("org.mellen.transmissionair.view.IconButton")]
 	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[

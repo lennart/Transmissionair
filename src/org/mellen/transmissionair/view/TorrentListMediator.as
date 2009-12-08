@@ -10,9 +10,10 @@ package org.mellen.transmissionair.view
 	
 	import mx.collections.ArrayCollection;
 	
+	import org.mellen.transmissionair.events.TorrentRPCEvent;
+	import org.mellen.transmissionair.services.BitTorrentFullRPCService;
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.Mediator;
-	import org.mellen.transmissionair.events.TorrentRPCEvent;
 	
 	public class TorrentListMediator extends Mediator implements IMediator
 	{
@@ -31,18 +32,14 @@ package org.mellen.transmissionair.view
 		
 		override public function onRegister():void
 		{
-			//adding an event listener to the Context for framework events
+			trace("Mediator registered");
 			eventMap.mapListener( eventDispatcher, TorrentRPCEvent.TORRENT_LIST_RECEIVED, updateTorrentList );
-			eventMap.mapListener( eventDispatcher, TorrentRPCEvent.SESSION_ID_RECEIVED, startPolling);
 			eventMap.mapListener( eventDispatcher, TorrentRPCEvent.TORRENT_DROPPED, loadTorrentFile);
 			eventMap.mapListener( torrentList, TorrentRPCEvent.TORRENT_PAUSE, pauseTorrent);
 			eventMap.mapListener( torrentList, TorrentRPCEvent.TORRENT_START, startTorrent);
 			eventMap.mapListener( torrentList, TorrentRPCEvent.TORRENT_REMOVE, removeTorrent);
-			//BindingUtils.bindProperty(torrentList,"dataProvider",this,"torrents");
 			torrentList.dataProvider = torrents;
-			//torrentList.dataProvider = _torrentList;
-			//adding an event listener to the view component being mediated
-			//eventMap.mapListener( myCustomComponent, MyCustomEvent.DID_SOME_STUFF, handleDidSomeStuff)
+			startPolling();
 		}
 		
 		
@@ -136,7 +133,7 @@ package org.mellen.transmissionair.view
 			rpc.listAllTorrents();
 		}
 		
-		private function startPolling(e: TorrentRPCEvent): void {
+		public function startPolling(): void {
 			pollTorrents.addEventListener(TimerEvent.TIMER,fetchTorrentList);
 			pollTorrents.start();
 		}

@@ -3,9 +3,11 @@
 					   xmlns:s="library://ns.adobe.com/flex/spark" 
 					   xmlns:mx="library://ns.adobe.com/flex/halo"
 					   xmlns:view="org.mellen.transmissionair.view.*"
-					   creationComplete="windowedapplication1_creationCompleteHandler(event)" viewSourceURL="srcview/index.html">
+					   creationComplete="windowedapplication1_creationCompleteHandler(event)" viewSourceURL="srcview/index.html" xmlns:control="org.mellen.transmissionair.control.*">
+	
 	<fx:Script>
 		<![CDATA[
+			import org.mellen.transmissionair.TransmissionAirContext;
 			import flash.system.System;
 			
 			import mx.events.FlexEvent;
@@ -15,15 +17,20 @@
 			private var context:TransmissionAirContext;
 			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
 			{
-				
-				
 				context = new TransmissionAirContext(this);
 			}
 
 		]]>
 	</fx:Script>
+	<s:states>
+		<s:State name="loading" />
+		<s:State name="serverConfig"/>
+		<s:State name="torrentList"/>		
+	</s:states>
 	
-	<view:TorrentList/>
+	<control:Spinner tickColor="#505050" includeIn="loading" horizontalCenter="0" verticalCenter="0"/> 
+	<view:TorrentList includeIn="torrentList"/>
+	<view:RPCServerConfig includeIn="serverConfig"/>
 	<s:nativeDragEnter>
 		// Event handler for when something is dragged over to the WindowedApplication
 		

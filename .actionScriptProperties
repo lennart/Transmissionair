@@ -18,7 +18,7 @@
     </application>
   </applications>
   <modules>
-    <module application="src/Transmissionair.mxml" destPath="IconButtonSkin.swf" optimize="true" sourcePath="src/IconButtonSkin.mxml"/>
+    <module application="src/Transmissionair.mxml" destPath="org/mellen/transmissionair/skins/IconButtonSkin.swf" optimize="true" sourcePath="src/org/mellen/transmissionair/skins/IconButtonSkin.mxml"/>
   </modules>
   <buildCSSFiles/>
 </actionScriptProperties>

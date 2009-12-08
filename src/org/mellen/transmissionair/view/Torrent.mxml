@@ -4,9 +4,9 @@
 				implements="flash.events.IEventDispatcher" 
 				width="100%" 
 				addedToStage="group1_addedToStageHandler(event)"
-				xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:local="*" xmlns:transmissionair="org.mellen.transmissionair.*">
+				xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:local="*" xmlns:transmissionair="org.mellen.transmissionair.*" xmlns:view="org.mellen.transmissionair.view.*">
 				
-	<fx:Binding source="{data.state}" destination="currentState" />
+	<fx:Binding source="{data.namedStatus}" destination="currentState" />
 	<fx:Script>
 		<![CDATA[
 			import flash.events.Event;
@@ -92,8 +92,8 @@
 	
 	<s:states>
 		<s:State name="paused" />
-		<s:State name="normal" basedOn="{data.state}"/>
-		<s:State name="hovered" basedOn="{data.state}"/>
+		<s:State name="normal" basedOn="{data.namedStatus}"/>
+		<s:State name="hovered" basedOn="{data.namedStatus}"/>
 		<s:State name="running"/>
 		<s:State name="pausedComplete" />
 		<s:State name="seeding"/> 		
@@ -132,12 +132,12 @@
 				</s:Rect>	
 			</s:Group>
 			
-			<transmissionair:IconButton skinClass="IconButtonSkin" iconUp="images/PauseOff.png"  click="stop(event)" 
+			<view:IconButton skinClass="org.mellen.transmissionair.skins.IconButtonSkin" iconUp="images/PauseOff.png"  click="stop(event)" 
 										iconDown="images/PauseOn.png"
 										iconOver="images/PauseHover.png"
 										includeIn="running,seeding"/>
 			
-			<transmissionair:IconButton skinClass="IconButtonSkin" iconUp="images/ResumeOff.png"  click="start(event)" 
+			<view:IconButton skinClass="org.mellen.transmissionair.skins.IconButtonSkin" iconUp="images/ResumeOff.png"  click="start(event)" 
 										iconDown="images/ResumeOn.png"
 										iconOver="images/ResumeHover.png"
 										includeIn="paused,pausedComplete"/>

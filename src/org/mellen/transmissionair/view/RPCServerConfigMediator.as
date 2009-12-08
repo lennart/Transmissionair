@@ -24,8 +24,6 @@ package org.mellen.transmissionair.view
 		
 		override public function onRegister():void
 		{
-			//adding an event listener to the Context for framework events
-			
 			eventMap.mapListener( dialog, ConfigEvent.ACCEPTED, proceed);
 			eventMap.mapListener( dialog, ConfigEvent.SAVE, save);
 			eventMap.mapListener( dialog, ConfigEvent.QUIT, cancel);

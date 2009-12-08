@@ -8,6 +8,7 @@ package org.mellen.transmissionair.commands
 	import org.mellen.transmissionair.view.TorrentListMediator;
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Command;
+	import org.mellen.transmissionair.services.BitTorrentFullRPCService;
 	
 	public class StartupCommand extends Command
 	{
@@ -22,12 +23,9 @@ package org.mellen.transmissionair.commands
 		override public function execute():void
 		{
 			//trace(event);
-			commandMap.mapEvent( ContextEvent.STARTUP_COMPLETE, StartupCompleteCommand, ContextEvent, true);
-			commandMap.mapEvent( ConfigEvent.READY, SpawnServerConfigurator, ConfigEvent, true);
 			
-			injector.mapSingletonOf(BitTorrentFullRPCService, TransmissionRPCService);
 			
-			mediatorMap.mapView(TorrentList,TorrentListMediator);
+			
 			
 			
 			
