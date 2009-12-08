@@ -37,9 +37,12 @@ This is alpha-Software. It is neither feature complete, nor is it fully tested. 
 
 Requirements
 ------------
-* Flex 4 SDK
-* Air 2 Beta SDK
-* FlashBuilder (not necessarily, but should be easier to compile)
+* to build from Source
+  * Flex 4 SDK
+  * Air 2 **Beta** SDK
+  * FlashBuilder (not necessarily, but should be easier to compile)
+* to simply run and install the binary `.air` file
+  * Air 2 **Beta** Runtime
 
 Dependencies
 --------
